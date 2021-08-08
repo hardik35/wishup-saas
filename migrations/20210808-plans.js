@@ -1,29 +1,29 @@
 module.exports = {
     up: (queryInterface, Sequelize) =>
       queryInterface.createTable('Plans', {
-        Id: {
+        id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
-        PlanName: {
+        name: {
           type: Sequelize.STRING,
           allowNull: false,
         },
-        DaysValidity: {
+        daysValidity: {
            type: Sequelize.INTEGER,
            allowNull: false,
         },
-        CostUSD: {
+        costUSD: {
             type: Sequelize.FLOAT(3),
             allowNull: false,
         },
-        CreatedAt: {
+        createdAt: {
           allowNull: false,
           type: Sequelize.DATE,
         },
-        UpdatedAt: {
+        updatedAt: {
           allowNull: false,
           type: Sequelize.DATE,
         },

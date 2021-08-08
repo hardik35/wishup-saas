@@ -3,15 +3,16 @@ const Users = require('../models').Users;
 module.exports = {
   async create(req, res) {
     try {
-      await users.create(
+      await Users.create(
         {
           name: req.body.name,
         }
       );
-      return res.status(200);
+      return res.sendStatus(200);
     }
     catch (e) {
-      return res.status(500);
+      console.error(e);
+      return res.sendStatus(500);
     }
   },
 };

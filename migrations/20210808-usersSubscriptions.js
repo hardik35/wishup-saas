@@ -7,21 +7,29 @@ module.exports = {
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
-        UserId: {
+        userId: {
           type: Sequelize.INTEGER,
           allowNull: false,
         },
-        PlanId: {
+        planId: {
           type: Sequelize.INTEGER,
           allowNull: false,
         },
-        PlanStartUTC: {
+        planStartUTC: {
           allowNull: false,
           type: Sequelize.BIGINT,
         },
-        PlanEndUTC: {
+        planEndUTC: {
           allowNull: false,
           type: Sequelize.BIGINT,
+        },
+        createdAt: {
+          allowNull: false,
+          type: Sequelize.DATE,
+        },
+        updatedAt: {
+          allowNull: false,
+          type: Sequelize.DATE,
         },
       }),
     down: (queryInterface /* , Sequelize */) => queryInterface.dropTable('UsersSubscriptions'),
