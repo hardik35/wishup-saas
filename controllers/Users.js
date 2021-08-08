@@ -15,4 +15,19 @@ module.exports = {
       return res.sendStatus(500);
     }
   },
+  async list(req, res) {
+    try {
+      const user = await Users.findOne({
+          where: {
+            id: req.params.id,
+          }
+        }
+      );
+      return res.status(200).send(user);
+    }
+    catch (e) {
+      console.error(e);
+      return res.sendStatus(500);
+    }
+  },
 };
