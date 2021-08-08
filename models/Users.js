@@ -6,5 +6,14 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
+  Users.associate = (models) => {
+    Users.belongsToMany(models.Plans, {
+      through: 'UsersSubscriptions',
+      foreignKey: 'userId',
+      as: 'users',
+    });
+  };
+
+
   return Users;
 };

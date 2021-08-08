@@ -1,7 +1,7 @@
 module.exports = {
     up: (queryInterface, Sequelize) =>
       queryInterface.createTable('UsersSubscriptions', {
-        Id: {
+        id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
