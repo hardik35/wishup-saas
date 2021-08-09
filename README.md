@@ -14,12 +14,17 @@ prefill plans by running script/plans.sql
 2. Changes
 
 Time storage in UTC milliseconds instead of date
+
 ID kept as integers instead of name in users and table
 
 
 3. Improvement
 usage of library to better handle dates
+
 accept utc milliseconds as plan start
+
 Add test cases
+
 add schema validation
+
 increase the plan validity when user subscribes to a plan that's already active
