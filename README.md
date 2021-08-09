@@ -22,3 +22,4 @@ usage of library to better handle dates
 accept utc milliseconds as plan start
 Add test cases
 add schema validation
+increase the plan validity when user subscribes to a plan that's already active

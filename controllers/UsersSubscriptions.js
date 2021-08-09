@@ -3,6 +3,8 @@ const Users = require('../models').Users;
 const Plans = require('../models').Plans;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
+const { QueryTypes } = require('sequelize');
+const db = require('../models/index')
 
 
 module.exports = {
@@ -40,14 +42,8 @@ module.exports = {
   },
   async listAllPlans(req, res) {
     try {
-      const allPlans = await UsersSubscriptions.findAll(
-        {
-          where: {
-            userId: req.params.userId,
-          },
-          attributes: ["id", "userId", "planId", "planStartUTC", "planEndUTC"]
-        }
-      );
+      const userId = req.params.userId;
+      const allPlans = await db.sequelize.query(`SELECT "UsersSubscriptions"."userId", "UsersSubscriptions"."planId", "UsersSubscriptions"."planStartUTC", "UsersSubscriptions"."planEndUTC", "Plans"."name" AS "planName", "Users"."name" AS "userName" FROM "public"."UsersSubscriptions" INNER JOIN "public"."Plans" ON  "UsersSubscriptions"."planId" = "Plans"."id" AND "UsersSubscriptions"."userId" = ${userId} INNER JOIN "public"."Users" ON "Users"."id" = ${userId}`, { type: QueryTypes.SELECT });
       return res.status(200).send(allPlans);
     }
     catch (e) {
@@ -57,21 +53,9 @@ module.exports = {
   },
   async listActivePlans(req, res) {
     try {
+      const userId = req.params.userId;
       const validTillDateToUTC = new Date(req.params.endDate).getTime();
-      const activePlans = await UsersSubscriptions.findAll(
-        {
-          where: {
-            userId: req.params.userId,
-            planEndUTC: {
-              [Op.gt]: validTillDateToUTC,
-            },
-            planStartUTC: {
-              [Op.lt]: validTillDateToUTC,
-            }
-          },
-          attributes: ["id", "userId", "planId", "planStartUTC", "planEndUTC"]
-        }
-      );
+      const activePlans = await db.sequelize.query(`SELECT "UsersSubscriptions"."userId", "UsersSubscriptions"."planId", "UsersSubscriptions"."planStartUTC", "UsersSubscriptions"."planEndUTC", "Plans"."name" AS "planName", "Users"."name" AS "userName" FROM "public"."UsersSubscriptions" INNER JOIN "public"."Plans" ON  "UsersSubscriptions"."planId" = "Plans"."id" AND "UsersSubscriptions"."userId" = ${userId} AND "UsersSubscriptions"."planStartUTC" < ${validTillDateToUTC} AND "UsersSubscriptions"."planEndUTC" > ${validTillDateToUTC} INNER JOIN "public"."Users" ON "Users"."id" = ${userId}`, { type: QueryTypes.SELECT });
       return res.status(200).send(activePlans);
     }
     catch (e) {
