@@ -19,6 +19,7 @@ module.exports = {
         }
       });
       const planDaysValidity = planDetails.daysValidity;
+      const planCostUSD = planDetails.costUSD;
       // converted days to millisecond and added the same to startDate to get lastDate
       const planEndDateUTC = (planDaysValidity * 24 * 60 * 60 * 1000) + planStartDateUTC;
       await UsersSubscriptions.create(
@@ -30,9 +31,7 @@ module.exports = {
         }
       );
       return res.status(200).send({
-        userId: req.body.userId,
-        planId: req.body.planId,
-        startDate: planStartDate,
+        amount: -Math.abs(planCostUSD),
       });
     }
     catch (e) {
